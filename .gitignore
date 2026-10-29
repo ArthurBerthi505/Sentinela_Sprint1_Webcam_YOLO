@@ -1,0 +1,29 @@
+# Ambiente Python e arquivos temporários
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Configurações locais
+.env
+.env.*
+!.env.example
+
+# Registros, bancos e filas criados durante a execução
+logs/
+dados/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# Pesos e exportações de modelos (baixados separadamente)
+*.pt
+*.onnx
+*.engine
+
+# Pacotes de distribuição
+*.zip
