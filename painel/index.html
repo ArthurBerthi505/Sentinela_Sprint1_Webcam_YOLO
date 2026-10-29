@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a111b">
+  <title>Sentinela · Monitoramento</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#visao-geral" aria-label="Sentinela, início">
+      <svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 3 35 9v13c0 9-8 15-15 19C13 37 5 31 5 22V9Z"/><path d="m12 22 6 6 11-13"/></svg>
+      <span>SENTINELA<small>MONITORAMENTO INTELIGENTE</small></span>
+    </a>
+    <p class="nav-label">CENTRAL DE OPERAÇÕES</p>
+    <nav aria-label="Navegação principal">
+      <a class="nav-link active" href="#visao-geral"><span aria-hidden="true">◫</span> Visão geral</a>
+      <a class="nav-link" href="#historico"><span aria-hidden="true">◷</span> Histórico de eventos</a>
+    </nav>
+    <div class="sidebar-note"><span class="tiny-dot"></span> AMBIENTE DE TESTES<p>Challenge FIAP<br>Instalação fictícia</p></div>
+    <div class="sidebar-footer">Sentinela <span>v1.2</span><small>Detecção de presença por visão computacional</small></div>
+  </aside>
+  <main id="visao-geral">
+    <header class="topbar"><span class="breadcrumb">Central de operações <span>/</span> Visão geral</span><div id="connection" class="connection waiting"><i></i><span>Conectando à API</span></div></header>
+    <section class="page-heading"><div><p class="eyebrow">ACOMPANHAMENTO DAS INSTALAÇÕES</p><h1>Visão geral</h1><p class="subtitle">Presença, disponibilidade e eventos em um só lugar.</p></div><button id="refresh" class="button secondary" type="button"><span aria-hidden="true">↻</span> Atualizar</button></section>
+    <div id="error-banner" class="error-banner" role="alert" hidden></div>
+    <section class="metrics" aria-label="Resumo do monitoramento">
+      <article class="metric"><span class="metric-label">Câmeras cadastradas</span><strong id="metric-cameras">—</strong><span class="metric-caption">Fontes que já enviaram dados</span><span class="metric-symbol" aria-hidden="true">◫</span></article>
+      <article class="metric"><span class="metric-label">Com presença detectada</span><strong id="metric-presence" class="mint">—</strong><span class="metric-caption">Estado confirmado e atualizado</span><span class="metric-symbol mint" aria-hidden="true">◎</span></article>
+      <article class="metric"><span class="metric-label">Indisponíveis</span><strong id="metric-unavailable" class="amber">—</strong><span class="metric-caption">Falha ou perda de comunicação</span><span class="metric-symbol amber" aria-hidden="true">!</span></article>
+      <article class="metric"><span class="metric-label">Eventos nas últimas 24 h</span><strong id="metric-events">—</strong><span class="metric-caption">Inclui atualizações periódicas</span><span class="metric-symbol" aria-hidden="true">↗</span></article>
+    </section>
+    <section class="monitor-section" aria-labelledby="rooms-title">
+      <div class="section-heading"><div><h2 id="rooms-title">Ambientes monitorados <span id="camera-total" class="count-pill">0</span></h2><p>Uma visão por câmera · atualização da tela a cada 2 segundos</p></div><span id="updated" class="update-label">Aguardando dados</span></div>
+      <div id="cameras" class="camera-grid" aria-live="polite"><div class="empty-state"><div class="empty-icon" aria-hidden="true">◫</div><h3>Preparando o monitoramento</h3><p>Consultando as fontes de dados disponíveis.</p></div></div>
+      <div class="reading-note"><span aria-hidden="true">ⓘ</span><p>A contagem mostra as detecções do quadro analisado. O estado passa por confirmação temporal. Ausência de detecção não comprova que uma sala esteja vazia.</p></div>
+    </section>
+    <section id="historico" class="history-section" aria-labelledby="history-title">
+      <div class="section-heading"><div><p class="eyebrow">RASTREABILIDADE</p><h2 id="history-title">Histórico de eventos</h2></div><button id="export" class="button secondary" type="button">↓ Exportar CSV</button></div>
+      <div class="table-panel">
+        <form id="filters" class="filters">
+          <label>Ambiente<select id="filter-camera"><option value="">Todos os ambientes</option></select></label>
+          <label>Estado<select id="filter-state"><option value="">Todos os estados</option><option value="PRESENCA_DETECTADA">Presença detectada</option><option value="SEM_PESSOAS_DETECTADAS">Sem pessoas detectadas</option><option value="VERIFICANDO">Verificando</option><option value="MONITORAMENTO_INDISPONIVEL">Indisponível</option></select></label>
+          <label>Período<select id="filter-hours"><option value="1">Última hora</option><option value="24" selected>Últimas 24 horas</option><option value="168">Últimos 7 dias</option><option value="720">Últimos 30 dias</option><option value="0">Todo o histórico</option></select></label>
+          <label class="checkbox-label"><input id="filter-heartbeats" type="checkbox"> Incluir atualizações periódicas</label>
+        </form>
+        <div class="table-scroll"><table><thead><tr><th>Data e hora</th><th>Ambiente / câmera</th><th>Estado confirmado</th><th>Pessoas no quadro</th><th>Inferência</th><th>Origem</th><th><span class="sr-only">Detalhes</span></th></tr></thead><tbody id="events"><tr><td colspan="7" class="table-empty">Carregando eventos…</td></tr></tbody></table></div>
+        <div class="table-footer"><span id="event-total">Aguardando consulta</span><div class="pagination"><button id="previous" type="button" aria-label="Página anterior" disabled>←</button><span id="page">1</span><button id="next" type="button" aria-label="Próxima página" disabled>→</button></div></div>
+      </div>
+      <p class="export-note">A exportação inclui até 10 mil eventos dos filtros selecionados. Horários exibidos no fuso do navegador.</p>
+    </section>
+    <footer class="page-footer"><span>Webcam → análise local → API → histórico</span><span>Protótipo acadêmico · Dados de presença, sem transmissão de vídeo</span></footer>
+  </main>
+  <dialog id="details"><div class="dialog-heading"><div><p class="eyebrow">REGISTRO RECEBIDO</p><h2>Detalhes do evento</h2></div><button id="close-details" type="button" aria-label="Fechar detalhes">×</button></div><pre id="event-json"></pre></dialog>
+</body>
+</html>

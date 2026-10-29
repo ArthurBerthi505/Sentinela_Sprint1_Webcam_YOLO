@@ -1,0 +1,16 @@
+﻿id;cenario;procedimento;resultado_esperado;data_hora;arquivo_sessao;confianca;imgsz;pessoas_reais;resultado_observado;tempo_confirmacao_s;fps_aproximado;falsas_deteccoes;pessoas_nao_detectadas;observacoes
+T01;Enquadramento sem pessoas;Manter a área visível sem pessoas por mais de 2 segundos;SEM_PESSOAS_DETECTADAS após o intervalo;;;;;;;;;;;
+T02;Uma pessoa entrando;Entrar no enquadramento e permanecer por mais de 0.5 segundo;PRESENCA_DETECTADA após a confirmação;;;;;;;;;;;
+T03;Pessoa parada ou sentada;Permanecer parado ou sentado durante 20 segundos;Comparar presença real com perdas de detecção;;;;;;;;;;;
+T04;Pessoa saindo;Sair totalmente do enquadramento por mais de 2 segundos;SEM_PESSOAS_DETECTADAS após o intervalo;;;;;;;;;;;
+T05;Reentrada durante a espera;Sair por 1 segundo e voltar antes de completar 2;Reiniciar a confirmação de ausência de detecção;;;;;;;;;;;
+T06;Duas pessoas visíveis;Posicionar duas pessoas lado a lado sem se ocultarem;Comparar contagem instantânea com contagem humana;;;;;;;;;;;
+T07;Pouca iluminação;Repetir entrada e permanência com iluminação reduzida;Medir perdas de detecção e mudanças indevidas;;;;;;;;;;;
+T08;Oclusão parcial;Sentar atrás de um móvel e mudar de posição;"Documentar perdas; ausência de detecção não comprova sala vazia";;;;;;;;;;;
+T09;Pessoa fora da região;Definir --roi 0.1 0.1 0.9 0.9 e ficar totalmente fora da região;Não contar caixas cujo centro esteja fora da região;;;;;;;;;;;
+T10;Falha da webcam;Se possível desconectar uma webcam USB durante o teste;Se a leitura falhar: MONITORAMENTO_INDISPONIVEL e encerramento;;;;;;;;;;;
+T11;Variação de confiança;Repetir o mesmo cenário com 0.30 / 0.45 / 0.65;Comparar falsas detecções e pessoas não detectadas;;;;;;;;;;;
+T12;Desempenho;Repetir o mesmo cenário com --imgsz 320 e 640;Comparar FPS e qualidade da detecção;;;;;;;;;;;
+T13;Falsa detecção de objeto;Apontar para o objeto que foi marcado como pessoa com --diagnostico;"Registrar classe e score; comparar limiares 0.65 e 0.75";;;;;;;;;;;
+T14;Imagem atrasada;Observar idade_imagem_ms durante a primeira inferência e nas seguintes;Resultados acima de 2000 ms: estado indisponível e contagem em branco;;;;;;;;;;;
+T15;Separar quadro atual e estado;"Entrar, permanecer e sair; observar contagem e espera restante";"Contagem muda no quadro; estado aguarda o intervalo de confirmação";;;;;;;;;;;
